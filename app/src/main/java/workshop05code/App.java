@@ -54,11 +54,15 @@ public class App {
 
         try (BufferedReader br = new BufferedReader(new FileReader("resources/data.txt"))) {
             String line;
-            int i = 1;
+            int i = 0;
             while ((line = br.readLine()) != null) {
-                System.out.println(line);
-                wordleDatabaseConnection.addValidWord(i, line);
-                i++;
+                if(line.length < 4 && !hasSymbol){
+                    System.out.println(line);
+                    wordleDatabaseConnection.addValidWord(i, line);
+                    i++;
+                }else{
+                    System.out.println("Sorry. Please enter a 4 LETTER WORD .\n");
+                }
             }
 
         } catch (IOException e) {
@@ -75,11 +79,14 @@ public class App {
 
             while (!guess.equals("q")) {
                 System.out.println("You've guessed '" + guess+"'.");
-
-                if (wordleDatabaseConnection.isValidWord(guess)) { 
-                    System.out.println("Success! It is in the the list.\n");
+                if(guess.length == 4 && !hasSymbol){
+                    if (wordleDatabaseConnection.isValidWord(guess)) { 
+                        System.out.println("Success! It is in the the list.\n");
+                    }else{
+                        System.out.println("Sorry. This word is NOT in the the list.\n");
+                    }
                 }else{
-                    System.out.println("Sorry. This word is NOT in the the list.\n");
+                    System.out.println("Sorry. Please enter a 4 LETTER WORD .\n");
                 }
 
                 System.out.print("Enter a 4 letter word for a guess or q to quit: " );
@@ -87,6 +94,17 @@ public class App {
             }
         } catch (NoSuchElementException | IllegalStateException e) {
             e.printStackTrace();
+        }
+
+        public static boolean hasSymbol(String s){
+            String reg = "0-9|!@#$%^&*()-_=+[\]{};:'\"<>,.?\/\\|~";
+            for (int i = 0; i < s.length(); i++) {
+            char currentChar = s.charAt(i);
+                if (reg.indexOf(currentChar) != -1) {
+                    return true; 
+                }
+            }
+            return false;
         }
 
     }

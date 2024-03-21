@@ -26,6 +26,8 @@ public class App {
             e1.printStackTrace();
         }
     }
+    
+    private static final Logger log = Logger.getLogger(App.class.getName());
 
     public static boolean hasSymbol(String s){
         String reg = "0-9|!@#$%^&*()-_=+[\\]{};:'\"<>,.?\\/\\|~";
@@ -69,6 +71,7 @@ public class App {
             while ((line = br.readLine()) != null) {
                 System.out.println(line);
                 wordleDatabaseConnection.addValidWord(i, line);
+                logger.log(Level.INFO,"DATABASE ID:"+i+" WORD:"+line);
                 i++;
             }
 
@@ -76,6 +79,7 @@ public class App {
             System.out.println("Not able to load . Sorry!");
             System.out.println(e.getMessage());
             System.out.println("test");
+            logger.log(Level.WARNING,"Exception",e);
             return;
         }
 
@@ -88,13 +92,16 @@ public class App {
             while (!guess.equals("q")) {
                 System.out.println("You've guessed '" + guess+"'.");
                 
+                
                 if(guess.length() == 4 && !hasSymbol(guess)){
                     if (wordleDatabaseConnection.isValidWord(guess)) { 
+                        
                         System.out.println("Success! It is in the the list.\n");
                     }else{
                         System.out.println("Sorry. This word is NOT in the the list.\n");
                     }
                 }else{
+                    logger.log(Level.WARNING,"User has guessed" + guess);
                     System.out.println("Sorry. Please enter a 4 LETTER WORD .\n");
                 }
 
@@ -102,6 +109,7 @@ public class App {
                 guess = scanner.nextLine();
             }
         } catch (NoSuchElementException | IllegalStateException e) {
+            logger.log(Level.WARNING,"Exception",e);
             e.printStackTrace();
         }
 

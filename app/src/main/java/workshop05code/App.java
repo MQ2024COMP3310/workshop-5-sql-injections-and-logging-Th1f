@@ -21,7 +21,7 @@ public class App {
         // must set before the Logger
         // loads logging.properties from the classpath
         try {// resources\logging.properties
-            LogManager.getLogManager().readConfiguration(new FileInputStream("resources/logging.properties"));
+            LogManager.getLogManager().readConfiguration(new FileInputStream("//Users//irvinhansen//Desktop//University//COMP3310//workshop-5-sql-injections-and-logging-Th1f//resources/logging.properties"));
         } catch (SecurityException | IOException e1) {
             e1.printStackTrace();
         }
@@ -52,7 +52,7 @@ public class App {
 
         // let's add some words to valid 4 letter words from the data.txt file
 
-        try (BufferedReader br = new BufferedReader(new FileReader("resources/data.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("//Users//irvinhansen//Desktop//University//COMP3310//workshop-5-sql-injections-and-logging-Th1f//resources//data.txt"))) {
             String line;
             int i = 1;
             while ((line = br.readLine()) != null) {
@@ -75,7 +75,7 @@ public class App {
 
             while (!guess.equals("q")) {
                 System.out.println("You've guessed '" + guess+"'.");
-
+                
                 if (wordleDatabaseConnection.isValidWord(guess)) { 
                     System.out.println("Success! It is in the the list.\n");
                 }else{
